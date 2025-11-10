@@ -1,6 +1,11 @@
 ﻿namespace CookBookRecipe.Domain.Models;
 
-//Buat ingredient as abstract class (tulis reason)
+/*
+ * Ingredient adalah domain utama yang berupa komponen tunggat
+ * dia memiliki ID dan Name yang unik, tetapi ada beberapa behavior yang berbeda
+ * maka dari itu butuh template method supaya beberapa ingredient boleh override behavior mereka
+ * lewat abstract class GetInstruction()
+ */
 public abstract class Ingredient
 {
     protected int Id { get; }
@@ -21,8 +26,6 @@ public abstract class Ingredient
     
     //Hal yang subclasses harus lakukan, allow override karena mereka punya behavior sendiri
     public abstract string GetInstructions();
-    
-    //Public accessor (kurang tahu apa itu)
     public int GetId() => Id;
     public string GetName() => Name;
 }

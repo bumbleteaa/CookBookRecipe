@@ -14,14 +14,14 @@ public class JsonRecipesCatalog : IRecipesCatalog
     {
         _filePath = filePath;
     }
-
+    
+    //Method untuk load atau tampilkan resep (jika sudah ada input resep dari user)
     public List<Recipe> LoadRecipes()
     {
         if (!File.Exists(_filePath))
         {
             return new List<Recipe>();
         }
-        //idStrings & idString ambigu, coba cari cara lain
         var json = File.ReadAllText(_filePath);
         var recipeIdStrings = JsonSerializer.Deserialize<List<string>>(json);
 
@@ -35,7 +35,7 @@ public class JsonRecipesCatalog : IRecipesCatalog
         foreach (var idString in recipeIdStrings)
         {
             var recipe = new Recipe();
-            var ids = idString.Split(',');
+            var ids = idString.Split(','); //Tiap inputan baru otomatis split dengan comma (,)
 
             foreach (var idStr in ids)
             {
@@ -44,20 +44,20 @@ public class JsonRecipesCatalog : IRecipesCatalog
                     var addedIngredient = IngredientsCatalog.GetIngredientById(id);
                     if (addedIngredient != null)
                     {
-                        recipe.AddIngredient(addedIngredient);
+                        recipe.AddIngredient(addedIngredient); //Jika user memasukkan ID ingredient, maka penambahan ke resep diproses
                     }
                 }
             }
 
             if (!recipe.IsEmpty)
             {
-                recipes.Add(recipe);
+                recipes.Add(recipe); //Jika resep kosong, maka langsung buat resep baru sebagai perintah
             }
         }
         return recipes;
     }
 
-    //Bikin var baru, jangan recipes, terlalu generic
+    //Method untuk save recipe ke dalam catalog JSON
     public void SaveRecipe(Recipe recipe)
     {
         var savedRecipes = new List<string>();

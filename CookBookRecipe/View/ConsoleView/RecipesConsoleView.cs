@@ -4,7 +4,10 @@ using CookBookRecipe.DataController.Catalogs;
 using CookBookRecipe.Domain.Models;
 
 namespace CookBookRecipe.View.ConsoleView;
-
+/*
+ * View console terpusat pada satu file, jika akan diganti dengan GUI
+ * dapat membuat class view GUI yang di-orchestrate ke program.css
+ */
 public class RecipesConsoleView
 {
     public void PrintExistingRecipe(List<Recipe> recipes)
@@ -34,7 +37,8 @@ public class RecipesConsoleView
             Console.WriteLine($"{ingredient.GetId()} {ingredient.GetName()}");
         }
     }
-
+    
+    //Method untuk baca input angka ID dari user
     public Recipe ReadIngredientsUserInput()
     {
         var recipe =  new Recipe();
@@ -45,10 +49,10 @@ public class RecipesConsoleView
 
             if (int.TryParse(userInput, out int id))
             {
-                var ingredient = IngredientsCatalog.GetIngredientById(id);
-                if (ingredient != null) //ganti local var
+                var inputIngredient = IngredientsCatalog.GetIngredientById(id);
+                if (inputIngredient != null) 
                 {
-                  recipe.AddIngredient(ingredient);  
+                  recipe.AddIngredient(inputIngredient);  
                 } 
             }
             else
@@ -58,7 +62,8 @@ public class RecipesConsoleView
         }
         return recipe;
     }
-
+    
+    //Method untuk menampilkan resep yang sudah di assembly
     public void PrintRecipe(Recipe recipe)
     {
         foreach (var ingredient in recipe.GetIngredients())
@@ -66,7 +71,8 @@ public class RecipesConsoleView
             Console.WriteLine(ingredient.DisplayIngredient());
         }
     }
-
+    
+    //Method template untuk message, allow override
     public void ShowMessage(string message)
     {
         Console.WriteLine(message);

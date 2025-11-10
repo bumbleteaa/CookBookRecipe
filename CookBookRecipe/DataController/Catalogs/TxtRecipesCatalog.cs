@@ -4,18 +4,22 @@ using System.IO;
 using CookBookRecipe.DataController.Interfaces;
 using CookBookRecipe.Domain.Models;
 
+/*
+ * Savefile resep dengan format txt, in the scenario jika json tidak digunakan
+ */
 
 namespace CookBookRecipe.DataController.Catalogs;
 
-public class TxtRecipesCatalog : IRecipesCatalog
+public class TxtRecipesCatalog : IRecipesCatalog //Belongs to method yang ada di interface 
 {
     private readonly string _filePath;
-
+    
     public TxtRecipesCatalog(string filePath)
     {
         _filePath = filePath;
     }
-
+    
+    //Load atau tampilkan resep yang ada pada format txt
     public List<Recipe> LoadRecipes()
     {
         if (!File.Exists(_filePath))
@@ -31,28 +35,29 @@ public class TxtRecipesCatalog : IRecipesCatalog
             if (string.IsNullOrWhiteSpace(line)) continue;
             
             var recipe = new Recipe();
-            var ids = line.Split(',');
+            var ids = line.Split(','); //setiap inputan di split menggunakan comma (,)
 
             foreach (var idStr in ids)
             {
                 if (int.TryParse(idStr.Trim(), out int id))
                 {
-                    var ingredient = IngredientsCatalog.GetIngredientById(id);
-                    if (ingredient != null)
+                    var inputIngredient = IngredientsCatalog.GetIngredientById(id);
+                    if (inputIngredient != null)
                     {
-                        recipe.AddIngredient(ingredient);
+                        recipe.AddIngredient(inputIngredient); //Jika user memasukkan id maka ingredient masuk ke recipe
                     }
                 }
             }
 
             if (!recipe.IsEmpty)
             {
-                recipes.Add(recipe);
+                recipes.Add(recipe); //Jika list resep kosong maka langsung return ke tambah resep
             }
         }
         return recipes;
     }
-
+    
+    //Method untuk save file txt setelah user input ingredient dengan id yang benar
     public void SaveRecipe(Recipe recipe)
     {
         var line = recipe.GetIngredientIds();

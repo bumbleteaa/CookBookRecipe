@@ -4,6 +4,10 @@ using CookBookRecipe.DataController.Catalogs;
 using CookBookRecipe.Domain.Enumeration;
 namespace CookBookRecipe.DataController.Factories;
 
+/*
+ * Implement factory method supaya dengan mudah mengganti file format hanya
+ * dengan mengganti FileFormat.NAMAFORMAT
+ */
 public static class RecipesCatalogFactory
 {
     public static IRecipesCatalog Create(FileFormat saveFormat)
