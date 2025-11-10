@@ -20,7 +20,7 @@ private const FileFormat Format = FileFormat.JSON; // or FileFormat.TXT
 ### Template Method Pattern 
 ```
 Ingredient (abstract)
-├── GetDisplayText() ← template method
+├── DisplayIngredient() ← template method
 └── GetInstructions() ← hook method
     ├── FlourIngredient ← eliminates "sieve" duplication
     │   ├── WheatFlour
@@ -72,7 +72,7 @@ Dependencies flow inward. Domain has no dependencies on UI or files.
 
 | Pattern | Where | Why |
 |---------|-------|-----|
-| Template Method | Ingredient.GetDisplayText() | Consistent format, custom instructions |
+| Template Method | Ingredient.DisplayIngredient() | Consistent format, custom instructions |
 | Repository | IRecipesCatalog | Abstract storage mechanism |
 | Factory | RecipesCatalogFactory | Centralize format decision |
 | Composition | Recipe contains Ingredients | HAS-A, not IS-A |
