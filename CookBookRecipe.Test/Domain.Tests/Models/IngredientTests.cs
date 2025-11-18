@@ -14,7 +14,7 @@ public class IngredientTests
         var coconut = new CoconutFlour();
         
         //Cek, apakah behavior coconut dan wheat sama?
-        Assert.Equal(wheat.GetInstructions(), coconut.GetInstructions());
+        Assert.Equal(wheat.CompleteInstructions(), coconut.CompleteInstructions());
     }
     
     //TEST SCENARIO 2: Memastikan abstract class SpiceIngredient berjalan dengan baik
@@ -25,7 +25,7 @@ public class IngredientTests
         var cardamom = new Cardamom();
         
         //Cek, apakah behavior cinnamon dan cardamom sama?
-        Assert.Equal(cinnamon.GetInstructions(), cardamom.GetInstructions());
+        Assert.Equal(cinnamon.CompleteInstructions(), cardamom.CompleteInstructions());
     }
     
     //TEST SCENARIO 3: Memastikan ID dan Name unique (tidak ada yang overwrite atau salah arragement)

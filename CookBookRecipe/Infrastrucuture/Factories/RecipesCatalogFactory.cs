@@ -1,8 +1,8 @@
 ﻿using System;
-using CookBookRecipe.DataController.Interfaces;
-using CookBookRecipe.DataController.Catalogs;
+using CookBookRecipe.Infrastrucuture.Interfaces;
+using CookBookRecipe.Infrastrucuture.Catalogs;
 using CookBookRecipe.Domain.Enumeration;
-namespace CookBookRecipe.DataController.Factories;
+namespace CookBookRecipe.Infrastrucuture.Factories;
 
 /*
  * Implement factory method supaya dengan mudah mengganti file format hanya

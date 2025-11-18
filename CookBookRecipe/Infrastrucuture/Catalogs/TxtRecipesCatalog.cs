@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using CookBookRecipe.DataController.Interfaces;
+using CookBookRecipe.Infrastrucuture.Interfaces;
 using CookBookRecipe.Domain.Models;
 
 /*
  * Savefile resep dengan format txt, in the scenario jika json tidak digunakan
  */
 
-namespace CookBookRecipe.DataController.Catalogs;
+namespace CookBookRecipe.Infrastrucuture.Catalogs;
 
 public class TxtRecipesCatalog : IRecipesCatalog //Belongs to method yang ada di interface 
 {

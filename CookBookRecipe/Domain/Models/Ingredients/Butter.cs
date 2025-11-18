@@ -2,11 +2,6 @@
 
 public class Butter : Ingredient
 {
-    public Butter() : base(3, "Butter") { }
-    
-    //Override perilaku lewat method GetInstruction
-    public override string GetInstructions()
-    {
-        return "Melt on low heat. Add to other ingredients.";
-    }
+    public Butter() : base(3, "Butter",  requiresPreparation: true) { }
+    protected override string GetPreparations() => "Melt on low heat";
 }

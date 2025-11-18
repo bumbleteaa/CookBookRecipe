@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using Xunit;
-using CookBookRecipe.DataController.Catalogs;
+using CookBookRecipe.Infrastrucuture.Catalogs;
 using CookBookRecipe.Domain.Models;
 using CookBookRecipe.Domain.Models.Ingredients;
 

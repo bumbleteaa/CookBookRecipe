@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CookBookRecipe.Domain.Models;
-using CookBookRecipe.Domain.Models.Ingredients; 
+﻿using CookBookRecipe.Domain.Models;
+using CookBookRecipe.Domain.Models.Ingredients;
 
-namespace CookBookRecipe.DataController.Catalogs;
+namespace CookBookRecipe.Infrastrucuture.Catalogs;
 
 /*
  * Memastikan ingredient di dalam urutan yang benar dan tidak berubah dimanapun

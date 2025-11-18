@@ -7,10 +7,6 @@
 */
 public abstract class FlourIngredient : Ingredient
 {
-    protected FlourIngredient(int id, string name) : base(id, name){ }
-
-    public override string GetInstructions()
-    {
-        return "Sieve. Add to other ingredients.";
-    }
+    protected FlourIngredient(int id, string name) : base(id, name,  requiresPreparation: true) { }
+    protected override string GetPreparations() => "Sieve";
 }

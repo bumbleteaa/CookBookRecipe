@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using CookBookRecipe.DataController.Interfaces;
+using CookBookRecipe.Infrastrucuture.Interfaces;
 using CookBookRecipe.Domain.Models;
 
-namespace CookBookRecipe.DataController.Catalogs;
+namespace CookBookRecipe.Infrastrucuture.Catalogs;
 
 public class JsonRecipesCatalog : IRecipesCatalog
 {

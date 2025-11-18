@@ -2,10 +2,6 @@
 
 public class Chocolate : Ingredient
 {
-    public Chocolate() : base(4, "Chocolate") { }
-
-    public override string GetInstructions()
-    {
-        return "Melt in a water bath. Add to other ingredients.";
-    }
+    public Chocolate() : base(4, "Chocolate", requiresPreparation: true) { }
+    protected override string GetPreparations() => "Melt in a water bath";
 }
