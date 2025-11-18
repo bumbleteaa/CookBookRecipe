@@ -11,26 +11,11 @@ dotnet run
 # Run tests
 dotnet test
 
-# Change format: Edit Program.cs line 16
+# Change format: Edit Program.cs 
 private const FileFormat Format = FileFormat.JSON; // or FileFormat.TXT
 ```
 
 ## My Key Design Decisions
-
-### Template Method Pattern 
-```
-Ingredient (abstract)
-├── DisplayIngredient() ← template method
-└── GetInstructions() ← hook method
-    ├── FlourIngredient ← eliminates "sieve" duplication
-    │   ├── WheatFlour
-    │   └── CoconutFlour
-    ├── SpiceIngredient ← eliminates "teaspoon" duplication
-    │   ├── Cardamom
-    │   └── Cinnamon
-    └── Direct subclasses for unique ingredients
-        ├── Butter, Chocolate, Sugar, CocoaPowder
-```
 
 **Why I built categories even just 2 in each category?** Both flours share identical instructions. SpiceIngredient same reason. Trying to make separation JUST IN CASE the ingredient are added. In real case, there are so many categories applied, has so many type of flours, sugar, spice, cream, etc.
 
@@ -38,7 +23,7 @@ Ingredient (abstract)
 ```
 IRecipesCatalog <- this is interface
 -> TextRecipesRepository
-->JsonRecipesRepository
+-> JsonRecipesRepository
 ```
 
 Why interface Allows switching TXT/JSON without changing business logic. Easy to add XML later - just implement interface, update factory.
@@ -46,24 +31,27 @@ Why interface Allows switching TXT/JSON without changing business logic. Easy to
 ### Folder Structure
 ```
 Domain/          - Business logic (Ingredient, Recipe)
-DataController/  - File operations (Catalog)
-View/            - Console I/O View (RecipesConsoleView)
-Program.cs       - Orchestrating / assemble everything together
+Architecture/    - File operations (Catalog)
+View/            - Console I/O View, IUserInterface, Console Formatting and Messaging Prompt
+Application/     - Application controller and logic
+Program.cs       - Entry point 
 ```
-Just in case when GUI comes, i only changing view. Domain and DataAccess remain untouch.
 ## Architecture
 
 ```
-Program.cs (user entry point)
+Program.cs (Entry Point)
  |
  V
-View (CLI)
+View (CLI / UI)
  |
  V
-DataController (Catalog)
+Application (Use Cases)
  |
  V
-Domain (Ingredient, Recipe) <- No dependencies
+Infrastructure (Implementations)
+ |
+ V
+Domain (Entities + Rules)   <- No need dependency 
 ```
 
 Dependencies flow inward. Domain has no dependencies on UI or files.
@@ -79,14 +67,17 @@ Dependencies flow inward. Domain has no dependencies on UI or files.
 
 ## Testing
 
-Tests cover:
+### Unit Tests cover:
 - Recipe class (add ingredients, validate empty)
 - Ingredient hierarchy (template method, categories work)
 - Catalogs (load/save, edge cases)
 - IngredientsCatalog (get by ID, invalid IDs)
+### Architecture Tests Cover
+- Dependency direction (Domain has zero outward dependencies)
+- Constructor parameter limits (catches god classes)
+- Interface over concrete dependencies (ensures testability)
 
 ## (Might be) Future Changes
-
 **Better CLI:**
 1. I think CLI must be on loop, not executing manually after finishing program
 2. Clear screen makes CLI looks cleaner
@@ -97,14 +88,17 @@ Tests cover:
 |----------|-----|-----|---------|
 | Category abstractions (Flour, Spice) | Eliminates duplication | More classes |  Worth it because there are real duplication |
 | Catalog interface | Flexibility, testability | Extra abstraction |  Required for TXT/JSON |
-| No IUserInterface | Simpler for make program works | Need to build later |  YAGNI - wait for possible GUI |
 | Static IngredientsCatalog | Simple, efficient | Harder to test |  Fine - ingredients are constants and not ready to assume adding so much ingredient |
+| View layer split | Display format changes shouldn't touch user I/O code | Adding more class on directory, think of each class's responsibility | I think it's worth since i apply interface for view, when GUI really come, every method responsibility not stick each others |
+|Ingredient abstraction | Easy to handle repetition if ingredient list grow larger | No cons so far | I utulize more template pattern on ingredient so i can growing the list easily (easy maintainability) |
+| Creating Application class `CookBookRecipeApp.cs`, for being orchestrator instead of `Program.cs` | as entry point `Program.cs` shouldn't calling so much processing, so i isolate them to one method `Run()` | No cons so far, maybe add Application directory (more class and directory | `Program.cs` ready to scale if he's clean on first place |
+|Adding architecture test | I learn how to utulize arch test as gatekeeper, even im not using dedicated arch test as NetArchTest, to make sure when i scale, refactor and maintain this codebase, i walk on right rail | Adding more time to learn and code the arch test, when testing, there's much violation that i made when coding | Adding arch test keeping me to understand and concern more about architecture consistency |
 
 ## What I Learned
-
 1. **Template Method** works best when algorithm is consistent but steps vary between subclass
-2. **Abstraction** should eliminate real duplication
+2. **Abstraction** should eliminate real duplication especially on ingredient and user interface
 3. **Separation of concerns** prepares for change without acrobatic change things that works before
-4. **YAGNI** principle prevents complexity creep
+4. **Dependency Inversion** makes codebase more flexible and maintainable
+5. **Architecture Test** make sure i make architecture consistency
 
 ---
